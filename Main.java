@@ -10,6 +10,6 @@ public class Main {
         System.out.println(e.getPostiPrenotati());
         e.disdiciPosti(4);
         System.out.println(e.getPostiPrenotati());
-        System.out.println(e.ToString());
+        System.out.println(e.toString());
     }
 }
