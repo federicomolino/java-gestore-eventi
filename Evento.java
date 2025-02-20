@@ -8,9 +8,9 @@ public class Evento {
 
     private LocalDateTime data;
 
-    private static int postiTotali;
+    private final int postiTotali;
 
-    private static int postiPrenotati;
+    private int postiPrenotati;
 
     public Evento(String titolo, LocalDateTime data, int postiTotali) {
 
@@ -55,7 +55,8 @@ public class Evento {
         return postiPrenotati;
     }
 
-    public String ToString(){
+    @Override
+    public String toString(){
         return "Il titolo dello spettacolo è: " + titolo + "che si terrà il: " + data;
     }
 
@@ -75,7 +76,7 @@ public class Evento {
         this.data = data;
     }
 
-    public static int getPostiTotali() {
+    public int getPostiTotali() {
         return postiTotali;
     }
 
