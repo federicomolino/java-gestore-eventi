@@ -1,78 +1,96 @@
 package GestoreEventi;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Evento {
 
     private String titolo;
 
-    private LocalDateTime data;
+    private LocalDate data;
 
-    private final int postiTotali;
+    private int postiTotali;
 
     private int postiPrenotati;
 
-    public Evento(String titolo, LocalDateTime data, int postiTotali) {
-
-        this.titolo = titolo;
-
-        this.postiPrenotati =0;
+    public Evento(String titolo, LocalDate data, int postiTotali) {
+        if (titolo.trim().equals("")) {
+            throw new IllegalArgumentException("Il titolo deve essere specificato");
+        }else {
+            this.titolo = titolo;
+        }
 
         //verifico la data inserita
-        if (data.isBefore(LocalDateTime.now())) {
-            System.out.println("Data non valida");
+        if (data.isBefore(LocalDate.now())) {
+            throw new IllegalStateException("Data non valida,l'evento non può essere antecedente alla data odierna");
         }
         this.data = data;
 
         //verifico se i posti inseriti sono positivi
         if(postiTotali <=0){
-            System.out.println("Posti totali non valida");
+            throw new IllegalArgumentException("I posti totali devono avere un numero positivo");
         }
         this.postiTotali = postiTotali;
-
-
     }
 
     //Aggiunta posti
-    public int prenotaPosti(int numeroPosti){
-        if(getData().isBefore(LocalDateTime.now()) || postiTotali < numeroPosti){
-            System.out.println("Data non valida");
+    public int prenotaPosti(int numeroPosti) throws IllegalStateException, IllegalArgumentException{
+        if(getData().isBefore(LocalDate.now())){
+            throw new IllegalStateException("Data non valida,l'evento non può essere antecedente alla data odierna");
         } else if (postiTotali < numeroPosti || numeroPosti <= 0) {
-            System.out.println("numero posti non valido");
+            throw new IllegalArgumentException("Posti non disponibili o posti inseriti non validi");
         }
-        postiPrenotati+= numeroPosti;
-        return postiPrenotati;
+        //sommo i posti prenotati al totale già esistente
+        this.postiPrenotati += numeroPosti;
+        //Sottrango ai posti totali il numero di posti inserito
+        this.postiTotali -= numeroPosti;
+        return this.postiTotali;
     }
 
     //Togli posti
-    public int disdiciPosti(int postiDisdetti){
-        if(getData().isBefore(LocalDateTime.now())){
-            System.out.println("Data non valida");
-        } else if (postiDisdetti > postiPrenotati) {
-            System.out.println("I posti che vuoi disdire sono di più di quelli prenotati");
+    public int disdiciPosti(int postiDisdetti) throws IllegalStateException, IllegalArgumentException{
+        if(getData().isBefore(LocalDate.now())){
+            throw new IllegalStateException("Data non valida,l'evento non può essere antecedente alla data odierna");
+        } else if (postiDisdetti > postiPrenotati || postiDisdetti <= 0) {
+            throw new IllegalArgumentException("I posti da disdire sono superiori a quelli prenotati");
         }
-        postiPrenotati -= postiDisdetti;
-        return postiPrenotati;
+        //Sottraggo ai posti prenotati i posti che deveno essere disdetti
+        this.postiPrenotati -= postiDisdetti;
+        return this.postiPrenotati;
     }
 
     @Override
     public String toString(){
-        return "Il titolo dello spettacolo è: " + titolo + "che si terrà il: " + data;
+        return data + " " + "-" + " " + titolo;
     }
 
     public String getTitolo() {
         return titolo;
     }
 
-    public void setTitolo(String titolo) {
-        this.titolo = titolo;
+    // Stampo i posti totali rimasti e i prenotati
+    public void stampaPosti(){
+        System.out.println("Il numero di posti che sono stati prenotati sono " + getPostiPrenotati()
+                + "\ni posti rimasti sono " + getPostiTotali());
     }
 
-    public LocalDateTime getData() {
+    public void setTitolo(String titolo) {
+        if (titolo.trim().equals("")) {
+            throw new IllegalArgumentException("Il titolo deve essere specificato");
+        }else {
+            this.titolo = titolo;
+        }
+    }
+
+    public LocalDate getData() {
         return data;
     }
 
-    public void setData(LocalDateTime data) {
+    public void setData(LocalDate data){
+        //verifico la data inserita
+        if (data.isBefore(LocalDate.now())) {
+            throw new IllegalStateException("Data non valida,l'evento non può essere antecedente alla data odierna");
+        }
         this.data = data;
     }
 
