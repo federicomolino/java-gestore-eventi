@@ -2,6 +2,7 @@ package GestoreEventi;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.zip.DataFormatException;
 
 public class Evento {
 
@@ -13,7 +14,7 @@ public class Evento {
 
     private int postiPrenotati;
 
-    public Evento(String titolo, LocalDate data, int postiTotali) {
+    public Evento(String titolo, LocalDate data, int postiTotali){
         if (titolo.trim().equals("")) {
             throw new IllegalArgumentException("Il titolo deve essere specificato");
         }else {
@@ -22,7 +23,7 @@ public class Evento {
 
         //verifico la data inserita
         if (data.isBefore(LocalDate.now())) {
-            throw new IllegalStateException("Data non valida,l'evento non può essere antecedente alla data odierna");
+            throw new IllegalArgumentException("Data non valida,l'evento non può essere antecedente alla data odierna");
         }
         this.data = data;
 
@@ -34,10 +35,8 @@ public class Evento {
     }
 
     //Aggiunta posti
-    public int prenotaPosti(int numeroPosti) throws IllegalStateException, IllegalArgumentException{
-        if(getData().isBefore(LocalDate.now())){
-            throw new IllegalStateException("Data non valida,l'evento non può essere antecedente alla data odierna");
-        } else if (postiTotali < numeroPosti || numeroPosti <= 0) {
+    public int prenotaPosti(int numeroPosti) throws DataFormatException{
+        if (postiTotali < numeroPosti) {
             throw new IllegalArgumentException("Posti non disponibili");
         } else if (numeroPosti <= 0) {
             throw new IllegalArgumentException("Posti inseriti non validi");
@@ -50,14 +49,15 @@ public class Evento {
     }
 
     //Togli posti
-    public int disdiciPosti(int postiDisdetti) throws IllegalStateException, IllegalArgumentException{
-        if(getData().isBefore(LocalDate.now())){
-            throw new IllegalStateException("Data non valida,l'evento non può essere antecedente alla data odierna");
-        } else if (postiDisdetti > postiPrenotati || postiDisdetti <= 0) {
+    public int disdiciPosti(int postiDisdetti) throws DataFormatException{
+        if (postiDisdetti > postiPrenotati) {
             throw new IllegalArgumentException("I posti da disdire sono superiori a quelli prenotati");
+        } else if (postiDisdetti <= 0) {
+            throw new IllegalArgumentException("Posti inseriti non validi");
         }
         //Sottraggo ai posti prenotati i posti che deveno essere disdetti
         this.postiPrenotati -= postiDisdetti;
+        this.postiTotali += postiDisdetti;
         return this.postiPrenotati;
     }
 
@@ -97,7 +97,7 @@ public class Evento {
     public void setData(LocalDate data){
         //verifico la data inserita
         if (data.isBefore(LocalDate.now())) {
-            throw new IllegalStateException("Data non valida,l'evento non può essere antecedente alla data odierna");
+            throw new IllegalArgumentException("Data non valida,l'evento non può essere antecedente alla data odierna");
         }
         this.data = data;
     }
