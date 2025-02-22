@@ -1,10 +1,11 @@
 package GestoreEventi;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.zip.DataFormatException;
 
-public class Evento {
+public class Evento extends Exception {
 
     private String titolo;
 
@@ -23,13 +24,13 @@ public class Evento {
 
         //verifico la data inserita
         if (data.isBefore(LocalDate.now())) {
-            throw new IllegalArgumentException("Data non valida,l'evento non può essere antecedente alla data odierna");
+            throw new DateTimeException("ERROR!!Data non valida,non può essere antecedente alla data odierna");
         }
         this.data = data;
 
         //verifico se i posti inseriti sono positivi
         if(postiTotali <=0){
-            throw new IllegalArgumentException("I posti totali devono avere un numero positivo");
+            throw new ArithmeticException("I posti totali devono avere un numero positivo");
         }
         this.postiTotali = postiTotali;
     }
@@ -97,7 +98,7 @@ public class Evento {
     public void setData(LocalDate data){
         //verifico la data inserita
         if (data.isBefore(LocalDate.now())) {
-            throw new IllegalArgumentException("Data non valida,l'evento non può essere antecedente alla data odierna");
+            throw new DateTimeException("ERROR!!Data non valida,non può essere antecedente alla data odierna");
         }
         this.data = data;
     }

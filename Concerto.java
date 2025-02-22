@@ -13,10 +13,11 @@ public class Concerto extends Evento {
     private float prezzo;
 
 
-    public Concerto(String titolo, LocalDate data, int postiTotali, LocalTime ora, float prezzo){
+    public Concerto(String titolo, LocalDate data, int postiTotali, LocalTime ora, float prezzo) {
         super(titolo, data, postiTotali);
+        //verifco se la data è oggi e l'orario è già passato
         if (LocalDate.now().isEqual(getData()) && ora.isBefore(LocalTime.now())){
-            throw new IllegalArgumentException("Ora non valida, data odierna ma orario inferiore ad ora!!");
+            throw new DateTimeException("ERROR!!Ora non valida, data odierna ma orario inferiore ad ora!!");
         }
         this.ora = ora;
         if (prezzo <= 0){
@@ -27,7 +28,6 @@ public class Concerto extends Evento {
 
     //formatto i l'orario
     public String formatData() {
-        //verifco se la data è oggi e l'orario è già passato
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         return ora.format(formatter);
     }

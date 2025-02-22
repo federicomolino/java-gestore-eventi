@@ -1,5 +1,6 @@
 package GestoreEventi;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Scanner;
@@ -8,7 +9,6 @@ import java.util.zip.DataFormatException;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
             //Inserimento dati da passare al costruttore
             System.out.println("Inserisci il titolo dell'evento");
             String titolo = sc.nextLine().trim();
@@ -21,7 +21,20 @@ public class Main {
             System.out.println("Inserisci il prezzo dell'evento");
             float prezzo = sc.nextFloat();
 
-        Concerto e = new Concerto(titolo, data, posti,ora,prezzo);
+            //Verifico se nel costruttore i dati passati sono ok
+            Concerto e = null;
+            try {
+                new Concerto(titolo, data, posti,ora,prezzo);
+            }catch (IllegalArgumentException ex){
+                System.out.println(ex.getMessage());
+                return;//blocco il codice
+            }catch (DateTimeException exceptionDate){
+                System.out.println(exceptionDate.getMessage());
+                return;//blocco il codice
+            }catch (ArithmeticException ex){
+                System.out.println(ex.getMessage());
+                return;//blocco il codice
+            }
 
         System.out.println(e.toString());
         sc.nextLine();
