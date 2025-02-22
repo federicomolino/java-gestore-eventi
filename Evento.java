@@ -38,13 +38,15 @@ public class Evento {
         if(getData().isBefore(LocalDate.now())){
             throw new IllegalStateException("Data non valida,l'evento non può essere antecedente alla data odierna");
         } else if (postiTotali < numeroPosti || numeroPosti <= 0) {
-            throw new IllegalArgumentException("Posti non disponibili o posti inseriti non validi");
+            throw new IllegalArgumentException("Posti non disponibili");
+        } else if (numeroPosti <= 0) {
+            throw new IllegalArgumentException("Posti inseriti non validi");
         }
         //sommo i posti prenotati al totale già esistente
         this.postiPrenotati += numeroPosti;
         //Sottrango ai posti totali il numero di posti inserito
         this.postiTotali -= numeroPosti;
-        return this.postiTotali;
+        return this.postiPrenotati;
     }
 
     //Togli posti
@@ -61,7 +63,9 @@ public class Evento {
 
     @Override
     public String toString(){
-        return data + " " + "-" + " " + titolo;
+        //Formatto la data in giorno/mese/anno
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return data.format(formatter) + " " + "-" + " " + titolo;
     }
 
     public String getTitolo() {

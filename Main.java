@@ -10,13 +10,14 @@ public class Main {
         //Inserimento dati da passare al costruttore
         System.out.println("Inserisci il titolo dell'evento");
         String titolo = sc.nextLine();
-        System.out.println("Inserisci la data in cui si terrà l'evento (yyyy/mm/dd)");
+        System.out.println("Inserisci la data in cui si terrà l'evento (yyyy-mm-dd)");
         LocalDate data = LocalDate.parse(sc.nextLine());
         System.out.println("Inserisci il numero di posti totali");
         int posti = sc.nextInt();
 
         Evento e = new Evento(titolo, data, posti);
 
+        //System.out.println(e.toString());
         sc.nextLine();
         System.out.println("Vuoi effettuare delle prenotazioni? (y/n)");
         String scelta = sc.nextLine().trim().toLowerCase();
@@ -58,8 +59,5 @@ public class Main {
             System.out.println("Vuoi effettuare nuove disdette? (y/n)");
             sceltaDisdetta = sc.nextLine().trim().toLowerCase();
         }
-
-
-        //System.out.println(e.toString());
     }
 }
