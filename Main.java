@@ -1,6 +1,7 @@
 package GestoreEventi;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Scanner;
 
 public class Main {
@@ -9,14 +10,20 @@ public class Main {
 
         //Inserimento dati da passare al costruttore
         System.out.println("Inserisci il titolo dell'evento");
-        String titolo = sc.nextLine();
+        String titolo = sc.nextLine().trim();
         System.out.println("Inserisci la data in cui si terrà l'evento (yyyy-mm-dd)");
         LocalDate data = LocalDate.parse(sc.nextLine());
+        System.out.println("Inserisci l'orario dell'evento");
+        LocalTime ora = LocalTime.parse(sc.nextLine());
         System.out.println("Inserisci il numero di posti totali");
         int posti = sc.nextInt();
+        System.out.println("Inserisci il prezzo dell'evento");
+        float prezzo = sc.nextFloat();
 
-        Evento e = new Evento(titolo, data, posti);
+        Concerto e = new Concerto(titolo, data, posti,ora,prezzo);
 
+        System.out.println(e.toString());
+        //e.formatPrezzoEvento();
         //System.out.println(e.toString());
         sc.nextLine();
         System.out.println("Vuoi effettuare delle prenotazioni? (y/n)");

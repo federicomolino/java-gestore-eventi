@@ -63,9 +63,13 @@ public class Evento {
 
     @Override
     public String toString(){
-        //Formatto la data in giorno/mese/anno
+        return getFormatData() + " " + "-" + " " + titolo;
+    }
+
+    //formatto la data
+    public String getFormatData() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return data.format(formatter) + " " + "-" + " " + titolo;
+        return data.format(formatter);  // Restituisce la data come stringa formattata
     }
 
     public String getTitolo() {
