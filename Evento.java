@@ -3,9 +3,10 @@ package GestoreEventi;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.zip.DataFormatException;
 
-public class Evento extends Exception {
+public class Evento{
 
     private String titolo;
 
@@ -21,7 +22,6 @@ public class Evento extends Exception {
         }else {
             this.titolo = titolo;
         }
-
         //verifico la data inserita
         if (data.isBefore(LocalDate.now())) {
             throw new DateTimeException("ERROR!!Data non valida,non può essere antecedente alla data odierna");
