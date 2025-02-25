@@ -13,7 +13,7 @@ public class Concerto extends Evento {
     private float prezzo;
 
 
-    public Concerto(String titolo, LocalDate data, int postiTotali, LocalTime ora, float prezzo) {
+    public Concerto(String titolo, LocalDate data, int postiTotali, LocalTime ora, float prezzo){
         super(titolo, data, postiTotali);
 
         //verifco se la data è oggi e l'orario è già passato
@@ -56,7 +56,7 @@ public class Concerto extends Evento {
         return prezzo;
     }
 
-    public void setPrezzo(float prezzo) {
+    public void setPrezzo(float prezzo) throws ArithmeticException {
         if (prezzo <= 0){
             throw new ArithmeticException("Il prezzo non può essere minore uguale a 0");
         }

@@ -30,7 +30,7 @@ public class ProgrammaEventi {
         return count;
     }
 
-    public static int svuotaListaEventi(){
+    public static int svuotaListaEventi() throws ArithmeticException {
         if (eventi.size() == 0){
             throw new ArithmeticException("Non è presente nessun evento nella lista");
         }
@@ -54,8 +54,8 @@ public class ProgrammaEventi {
         }
     }
 
-    public static void ordinaEventi(){
-        /*Ordino la lista in base ai valori restituite nel getData
+    public static void ordinaEventi() throws ArithmeticException {
+        /*Ordino la lista in base ai valori restituiti nel getData
            per ogni oggetto Evento.
         */
         if (eventi.size() == 0){
