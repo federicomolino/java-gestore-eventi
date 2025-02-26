@@ -28,7 +28,7 @@ public class Concerto extends Evento {
         this.prezzo = prezzo;
     }
 
-    //formatto l'orario peer la stampa
+    //formatto l'orario per la stampa
     public String formatData() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         return ora.format(formatter);
@@ -56,10 +56,10 @@ public class Concerto extends Evento {
         return prezzo;
     }
 
-    public void setPrezzo(float prezzo) throws ArithmeticException {
+    public float setPrezzo(float prezzo) throws ArithmeticException {
         if (prezzo <= 0){
             throw new ArithmeticException("Il prezzo non può essere minore uguale a 0");
         }
-        this.prezzo = prezzo;
+        return this.prezzo = prezzo;
     }
 }

@@ -1,11 +1,8 @@
 package GestoreEventi;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.zip.DataFormatException;
 
 public class Evento{
@@ -98,12 +95,12 @@ public class Evento{
         return data;
     }
 
-    public void setData(LocalDate data) throws DateTimeException {
+    public LocalDate setData(LocalDate data) throws DateTimeException {
         //verifico la data inserita
         if (data.isBefore(LocalDate.now())) {
             throw new DateTimeException("ERROR!!Data non valida,non può essere antecedente alla data odierna");
         }
-        this.data = data;
+        return this.data = data;
     }
 
     public int getPostiTotali() {
