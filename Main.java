@@ -11,7 +11,9 @@ import java.util.zip.DataFormatException;
 
 public class Main {
     public static void main(String[] args) {
+        //Verranno aggiunti tutti gli eventi che l'utente crea
         List<Evento> eventiTotali = new ArrayList<>();
+
         Scanner sc = new Scanner(System.in);
         boolean creaNuovoEvento  = true;
         while (creaNuovoEvento ) {
