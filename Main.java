@@ -27,14 +27,6 @@ public class Main {
                 //faccio inserire l'orario e ne verifico il formato
                 System.out.println("Inserisci l'orario dell'evento (HH:mm)");
                 String oraInput = sc.nextLine().trim();
-//                LocalTime ora;
-//                try {
-//                    String timeInput = sc.nextLine().trim();
-//                    ora = LocalTime.parse(timeInput);
-//                }catch (DateTimeException e){
-//                    System.out.println("ERROR!!! L'orario deve essere passato nel seguente formato (HH:mm)");
-//                    return;
-//                }
 
                 System.out.println("Inserisci il numero di posti totali");
                 int posti = sc.nextInt();
@@ -142,14 +134,14 @@ public class Main {
                     ProgrammaEventi.numeroEventiTotoli();
                 }
             }
-                System.out.println("Vuoi aggiungere un nuovo evento? (y/n)");
-                creaNuovoEvento  = sc.nextLine().trim().toLowerCase().equals("y");
-                if(creaNuovoEvento  == true){
-                    /*In caso di creazione di un nuovo Evento creo ogni volta un nuovo
-                    oggetto*/
-                    Concerto nuovoConcerto = new Concerto(titolo, dataInput, posti, oraInput, prezzo);
-                    eventiTotali.add(nuovoConcerto);
-                }
+            System.out.println("Vuoi aggiungere un nuovo evento? (y/n)");
+            creaNuovoEvento  = sc.nextLine().trim().toLowerCase().equals("y");
+            if(creaNuovoEvento){
+                /*In caso di creazione di un nuovo Evento creo ogni volta un nuovo
+                   oggetto*/
+                Concerto nuovoConcerto = new Concerto(titolo, dataInput, posti, oraInput, prezzo);
+                eventiTotali.add(nuovoConcerto);
+            }
         }
     }
 }
