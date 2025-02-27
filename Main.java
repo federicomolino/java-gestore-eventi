@@ -82,14 +82,14 @@ public class Main {
                 scelta = sc.nextLine().trim().toLowerCase();
             }
 
-            if (e.getPostiPrenotati() == 0){
-                System.out.println("Non hai effettuato nessuna prenotazione");
-                return;
-            }
-
             //Disdetta dei posti
             System.out.println("Vuoi effettuare qualche disdetta? (y/n)");
             String sceltaDisdetta = sc.nextLine().trim().toLowerCase();
+            //Verifico se ci sono prenotazioni
+            if (e.getPostiPrenotati() == 0){
+                System.out.println("Non hai effettuato nessuna prenotazione");
+                sceltaDisdetta="n";
+            }
             while(sceltaDisdetta.equals("y")) {
                 System.out.println("Quanti posti vuoi disdire?");
                 int numeroPostiDisdettaInput = sc.nextInt();
@@ -103,11 +103,10 @@ public class Main {
                     System.out.println(ex2.getMessage());
                 }
                 e.stampaPosti();
-
                 sc.nextLine();
+
                 // Se i posti prenotati sono 0 faccio uscire
                 if (e.getPostiPrenotati() == 0){
-                    return;
                 }
                 System.out.println("Vuoi effettuare nuove disdette? (y/n)");
                 sceltaDisdetta = sc.nextLine().trim().toLowerCase();
