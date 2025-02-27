@@ -3,15 +3,18 @@ package GestoreEventi;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.zip.DataFormatException;
 
 
 public class Main {
     public static void main(String[] args) {
-
+        List<Evento> eventiTotali = new ArrayList<>();
         Scanner sc = new Scanner(System.in);
+        boolean creaNuovoEvento  = true;
+        while (creaNuovoEvento ) {
             //Inserimento dati da passare al costruttore
             System.out.println("Inserisci il titolo dell'evento");
             String titolo = sc.nextLine().trim();
@@ -45,7 +48,7 @@ public class Main {
             float prezzo = sc.nextFloat();
 
             //Verifico se nel costruttore i dati passati sono ok
-            Concerto e = null;
+            Concerto e;
             try {
                 e = new Concerto(titolo, data, posti,ora,prezzo);
             }catch (IllegalArgumentException exTitolo){
@@ -58,21 +61,20 @@ public class Main {
                 System.out.println(exPostiPrezzo.getMessage());
                 return;//blocco il codice
             }
-
-            Evento evento = new Evento("Titolo", LocalDate.of(2025,12,12),43);
-            Evento evento2 = new Evento("Titolo2", LocalDate.of(2025,11,12),43);
-            Evento evento3 = new Evento("Titolo3", LocalDate.of(2025,10,12),43);
-            ProgrammaEventi.aggiuntaEvento(evento);
-            ProgrammaEventi.aggiuntaEvento(evento2);
-            ProgrammaEventi.aggiuntaEvento(evento3);
-            ProgrammaEventi.aggiuntaEvento(e);
-            ProgrammaEventi.numeroEventiTotoli();
-            ProgrammaEventi.listaEventiPresenti(LocalDate.of(2025,12,16));
-            ProgrammaEventi.ordinaEventi();
-            ProgrammaEventi.svuotaListaEventi();
-
         System.out.println(e.toString());
         sc.nextLine();
+
+        //Inserire gli eventi creati nella lista e ritorno
+        // il conto totale degli eventi nella lista
+        System.out.println("Vuoi l'evento in lista?");
+        String aggiungiEvento = sc.nextLine().trim().toLowerCase();
+        if (aggiungiEvento.equals("y")) {
+            ProgrammaEventi.aggiuntaEvento(e);
+            ProgrammaEventi.numeroEventiTotoli();
+        }else if (aggiungiEvento.equals("n")) {
+            System.out.println("Nessun evento è stato aggiunto.");
+        }
+
         System.out.println("Vuoi effettuare delle prenotazioni? (y/n)");
         String scelta = sc.nextLine().trim().toLowerCase();
 
@@ -122,6 +124,37 @@ public class Main {
             }
             System.out.println("Vuoi effettuare nuove disdette? (y/n)");
             sceltaDisdetta = sc.nextLine().trim().toLowerCase();
+        }
+
+        //Per ricerca l'evento in una deteriminata data, in caso li metto in ordine
+        System.out.println("Devi ricercare un evento per una determinata data (y / n)");
+        String ricercaData = sc.nextLine().trim().toLowerCase();
+        if(ricercaData.equals("y")){
+            System.out.println("Inserisci la data che vuoi ricercare (yyyy-MM-dd)");
+            String ricercaDataInput = sc.nextLine().trim();
+            ProgrammaEventi.listaEventiPresenti(ricercaDataInput);
+            System.out.println("Gli eventi in ordine sono invece\n");
+            ProgrammaEventi.ordinaEventi();
+        }
+
+        //verifico se si necessita di svuotare la lista!
+        if (aggiungiEvento.equals("y")){
+                System.out.println("Vuoi svuotare la lista? (y/n)");
+                String cancellaEventiLista = sc.nextLine().trim().toLowerCase();
+            if (cancellaEventiLista.equals("y")){
+                ProgrammaEventi.svuotaListaEventi();
+            }else{
+                ProgrammaEventi.numeroEventiTotoli();
+            }
+        }
+            System.out.println("Vuoi aggiungere un nuovo evento? (y/n)");
+            creaNuovoEvento  = sc.nextLine().trim().toLowerCase().equals("y");
+            if(creaNuovoEvento  == true){
+                /*In caso di creazione di un nuovo Evento creo ogni volta un nuovo
+                oggetto*/
+                Concerto nuovoConcerto = new Concerto(titolo, data, posti, ora, prezzo);
+                eventiTotali.add(nuovoConcerto);
+            }
         }
     }
 }
