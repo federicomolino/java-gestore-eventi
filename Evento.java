@@ -9,29 +9,30 @@ public class Evento{
 
     private String titolo;
 
-    private LocalDate data;
+    private String data;
 
     private int postiTotali;
 
     private int postiPrenotati;
 
-    public Evento(String titolo, LocalDate data, int postiTotali) {
+    public Evento(String titolo, String dataInput, int postiTotali) {
         if (titolo.trim().equals("")) {
             throw new IllegalArgumentException("Il titolo deve essere specificato");
-        }else {
-            this.titolo = titolo;
         }
+        this.titolo = titolo;
 
-        if (data.isBefore(LocalDate.now())) {
-            throw new DateTimeException("ERROR!!Data non valida,non può essere antecedente alla data odierna");
+        //Verifico la data inserita
+        try{
+            LocalDate data = LocalDate.parse(dataInput);
+            //verifico se i posti inseriti sono positivi
+            if(postiTotali <=0){
+                throw new ArithmeticException("I posti totali devono avere un numero positivo");
+            }
+        }catch (DateTimeException e){
+            throw new DateTimeException("ERROR!!Data inserita non valida, il formato deve essere (yyyy-MM-dd)");
         }
+        this.data = dataInput;
 
-        this.data = data;
-
-        //verifico se i posti inseriti sono positivi
-        if(postiTotali <=0){
-            throw new ArithmeticException("I posti totali devono avere un numero positivo");
-        }
         this.postiTotali = postiTotali;
     }
 
@@ -70,7 +71,7 @@ public class Evento{
     //formatto la data
     public String getFormatData() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return data.format(formatter);  // Restituisce la data come stringa formattata
+        return getData().format(formatter);  // Restituisce la data come stringa formattata
     }
 
     public String getTitolo() {
@@ -92,15 +93,22 @@ public class Evento{
     }
 
     public LocalDate getData() {
+        //trasformo il LocalDate
+        LocalDate data = LocalDate.parse(this.data);
         return data;
     }
 
-    public LocalDate setData(LocalDate data) throws DateTimeException {
-        //verifico la data inserita
+    public String setData(String dataInput) throws DateTimeException {
+        LocalDate data = LocalDate.parse(dataInput);
+        try{
+            data = LocalDate.parse(dataInput);
+        }catch (DateTimeException e){
+            System.out.println("ERROR!!! La data inserita non è nel formato corretto (yyyy-mm-dd)");
+        }
         if (data.isBefore(LocalDate.now())) {
             throw new DateTimeException("ERROR!!Data non valida,non può essere antecedente alla data odierna");
         }
-        return this.data = data;
+        return this.data = dataInput;
     }
 
     public int getPostiTotali() {

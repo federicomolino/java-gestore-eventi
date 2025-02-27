@@ -19,7 +19,6 @@ public class ProgrammaEventi {
 
     public static void aggiuntaEvento(Evento evento) {
         eventi.add(evento);
-        //System.out.println(eventi);
     }
 
     public static int numeroEventiTotoli(){
